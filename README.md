@@ -52,32 +52,38 @@ The project is organized into a set of modules that can be composed or extended 
 ## Installation
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/YourUsername/LLMOpt.git
    cd LLMOpt
-Create a virtual environment (recommended):
+```
 
-bash
-Copy
+2. **Create a virtual environment (recommended):**
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
-Install dependencies:
+```
 
-bash
-Copy
+3. **Install dependencies:**
+
+```bash
+
 pip install -r requirements.txt
 (Typical libraries: openai, tiktoken, transformers, torch, etc.)
+```
 
-Set up environment variables (if using OpenAI):
+4. **Set up environment variables (if using OpenAI):**
 
-bash
-Copy
+```bash
+
 export OPENAI_API_KEY="YOUR_OPENAI_KEY"
-or put this key in a .env file that your project can load.
 
-Project Structure
-bash
-Copy
+or put this key in a `.env` file that your project can load.
+```
+## Project Structure
+
+```bash
 LLMOpt/
 ├── src/
 │   ├── llm_selector/
@@ -96,15 +102,19 @@ LLMOpt/
 ├── README.md
 ├── requirements.txt
 └── ...
+```
+
 complexity_analyzer.py – Contains ComplexityAnalyzer to compute token, linguistic, and structural complexity.
 core.py – Contains LLMSelector, the main class that picks a model and generates responses.
 model_registry.py – Defines ModelConfig and ModelRegistry, storing model info (name, threshold, provider instance, etc.).
 providers/ – Subpackage containing different LLM providers (OpenAI, Hugging Face, or custom).
 compression/ – Subpackage with BaseCompression (no-op) and more advanced compressors like PromptCompressor.
-Usage Examples
-Complexity Analysis
-python
-Copy
+
+
+## Usage Examples
+### Complexity Analysis
+
+```python
 from src.llm_selector.complexity_analyzer import ComplexityAnalyzer
 
 analyzer = ComplexityAnalyzer()
@@ -119,9 +129,11 @@ print("Complexity Details:", details)
 #   'structural_complexity': 39.0,
 #   'token_count': 23
 # }
-Model Selection & Generation
-python
-Copy
+
+```
+
+### Model Selection & Generation
+```python
 import logging
 from src.llm_selector.core import LLMSelector
 from src.llm_selector.model_registry import ModelRegistry, ModelConfig
@@ -155,9 +167,11 @@ llm_selector = LLMSelector(
 prompt = "Hello, how are you?"
 response = llm_selector.generate_response(prompt)
 print("Response:", response)
-Prompt Compression
-python
-Copy
+
+```
+
+### Prompt Compression
+```python
 from src.llm_selector.core import LLMSelector
 from src.llm_selector.model_registry import ModelRegistry, ModelConfig
 from src.llm_selector.providers.openai import OpenAIProvider
@@ -185,35 +199,35 @@ llm_selector = LLMSelector(
 long_prompt = """This is a very lengthy piece of text that might exceed token limits..."""
 response = llm_selector.generate_response(long_prompt, max_tokens_for_compression=100)
 print("Compressed + Model Response:", response)
-Available Models
+
+```
+
+## Available Models
 You can register as many models as you like in ModelRegistry(models=[]). Each entry is a ModelConfig with:
 
 name: A unique string identifier.
 complexity_threshold: A numeric value indicating the maximum complexity that model can handle.
 model_instance: An instance of a provider (e.g., OpenAIProvider, HuggingFaceProvider, etc.).
-Advanced Configuration
-Environment Variables
 
-OPENAI_API_KEY: Required if using OpenAIProvider.
+
+## Advanced Configuration
+
+### Environment Variables
+`OPENAI_API_KEY`: Required if using OpenAIProvider.
 GPU usage for Hugging Face models is automatically handled if CUDA is available.
-Extended Complexity Analysis
 
-Modify the ComplexityAnalyzer or create your own subclass to adjust weights, thresholds, or incorporate new metrics.
-Prompt Compression
+### Extended Complexity Analysis
+Modify the `ComplexityAnalyzer` or create your own subclass to adjust weights, thresholds, or incorporate new metrics.
 
-The default is BaseCompression, which returns the prompt unmodified.
-For more advanced logic, use PromptCompressor or your own custom class.
-Pass max_tokens_for_compression in generate_response to control the compression limit.
-Logging
+### Prompt Compression
+The default is `BaseCompression`, which returns the prompt unmodified.
+For more advanced logic, use `PromptCompressor` or your own custom class.
+Pass `max_tokens_for_compressio`n in `generate_response` to control the compression limit.
 
-The LLMSelector accepts an optional logger. It defaults to a logger named after __name__.
-Contributing
-Fork this repository and create a new feature branch.
-Make your changes (and add tests where applicable).
-Submit a pull request. For major changes, discuss via an issue first.
-We appreciate all forms of contribution, whether bug reports, code improvements, or feature requests.
+### Logging
+The `LLMSelector` accepts an optional logger. It defaults to a logger named after __name__.
 
-License
-Private License
+## License
+### Private License
 All rights reserved.
 You are not permitted to distribute or modify this code without explicit permission from the owner.
