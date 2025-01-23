@@ -1,0 +1,6 @@
+.env
+.ipynb_checkpoints
+.venv
+.vscode
+.pytest_cache
+.DS_Store
