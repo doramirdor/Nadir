@@ -8,7 +8,7 @@ from transformers import pipeline
 
 from src.compression import BaseCompression
 
-class PromptCompressor(BaseCompression):
+class OpenaiCompressor(BaseCompression):
     """
     A flexible compressor that offers multiple methods to reduce prompt length:
     - Truncation

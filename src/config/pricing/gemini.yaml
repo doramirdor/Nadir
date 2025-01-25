@@ -1,0 +1,29 @@
+gemini_pricing:
+  gemini_1_5_flash:
+    input_pricing:
+      below_128k: 0.000075
+      above_128k: 0.00015
+    output_pricing:
+      below_128k: 0.0003
+      above_128k: 0.0006
+  gemini_1_5_flash_8b:
+    input_pricing:
+      below_128k: 0.0000375
+      above_128k: 0.000075
+    output_pricing:
+      below_128k: 0.00015
+      above_128k: 0.0003
+  gemini_1_5_pro:
+    input_pricing:
+      below_128k: 0.00125
+      above_128k: 0.0025
+    output_pricing:
+      below_128k: 0.005
+      above_128k: 0.01
+  gemini_1_0_pro:
+    input_pricing:
+      below_128k: 0.0005
+      above_128k: 0.001
+    output_pricing:
+      below_128k: 0.0015
+      above_128k: 0.003

@@ -2,8 +2,10 @@
 anthropic>=0.20.0
 openai>=1.0.0
 transformers>=4.35.0
+accelerate>=0.20.0  # Optional, for better GPU handling
 tiktoken>=0.5.0
 torch>=2.0.0
+google-generativeai>=0.8.0
 
 # Data Processing
 numpy>=1.22.0

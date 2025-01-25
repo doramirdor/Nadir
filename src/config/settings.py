@@ -1,6 +1,7 @@
 from typing import Dict, Optional, List
 from pydantic import BaseModel, Field, validator
 from src.llm_selector.providers import BaseProvider
+from src.llm_selector.providers.anthropic import AnthropicProvider
 import os
 
 class ModelConfig(BaseModel):
@@ -15,18 +16,18 @@ class ModelConfig(BaseModel):
         le=100,
         description="Complexity threshold for selecting the model."
     )
-    max_tokens: int = Field(
-        default=200000,
-        gt=0,
-        description="Maximum number of tokens supported by the model."
-    )
-    cost_per_1k_tokens: float = Field(
+    cost_per_1k_tokens_input: float = Field(
         default=0.25,
         gt=0,
-        description="Cost per 1000 tokens in USD."
+        description="Cost per 1000 input tokens in USD."
+    )
+    cost_per_1k_tokens_output: float = Field(
+        default=0.25,
+        gt=0,
+        description="Cost per 1000 output tokens in USD."
     )
     api_key: Optional[str] = None
-    model_instance: BaseProvider = BaseProvider()
+    model_instance: Optional[BaseProvider] = None
 
     @validator("api_key", always=True)
     def set_api_key_from_env(cls, v, values):
@@ -53,14 +54,14 @@ class DynamicLLMSelectorConfig(BaseModel):
                 provider="anthropic",
                 complexity_threshold=50.0,
                 max_tokens=200000,
-                cost_per_1k_tokens=0.25
+                model_instance=AnthropicProvider("claude-haiku")
             ),
             "claude-sonnet": ModelConfig(
                 name="claude-sonnet",
                 provider="anthropic",
                 complexity_threshold=75.0,
                 max_tokens=200000,
-                cost_per_1k_tokens=0.50
+                model_instance=AnthropicProvider("claude-sonnet")
             )
         },
         description="Dictionary of registered model configurations."

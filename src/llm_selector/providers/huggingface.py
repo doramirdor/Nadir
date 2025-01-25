@@ -81,6 +81,62 @@ class HuggingFaceProvider(BaseProvider):
             response = response[len(prompt):].strip()
         
         return response
+    
+
+    def generate_with_metadata(self, prompt: str, **kwargs) -> dict:
+        """
+        Generate response with metadata using Hugging Face model.
+        
+        :param prompt: Input prompt
+        :param kwargs: Additional generation parameters
+        :return: Dictionary containing response and token usage
+        """
+        # Merge default and provided parameters
+        generation_params = {
+            'max_length': self.max_length,
+            'temperature': self.temperature,
+            'do_sample': True,
+            'top_p': 0.95,
+            'repetition_penalty': 1.2,
+            'pad_token_id': self.tokenizer.eos_token_id,
+            **kwargs
+        }
+        
+        # Tokenize input (include attention mask)
+        inputs = self.tokenizer(
+            prompt, 
+            return_tensors="pt", 
+            return_attention_mask=True
+        ).to(self.device)
+        
+        # Generate response
+        with torch.no_grad():
+            outputs = self.model.generate(
+                input_ids=inputs.input_ids, 
+                attention_mask=inputs.attention_mask,
+                **generation_params
+            )
+        
+        # Decode response
+        response_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+        # Remove the prompt from the response if repeated
+        if response_text.startswith(prompt):
+            response_text = response_text[len(prompt):].strip()
+
+        # Token usage
+        prompt_tokens = len(inputs.input_ids[0])  # Token count for the prompt
+        completion_tokens = len(self.tokenizer.encode(response_text))  # Token count for the generated response
+        total_tokens = prompt_tokens + completion_tokens
+
+        return {
+            "response": response_text,
+            "usage": {
+                "input_tokens": prompt_tokens,
+                "output_tokens": completion_tokens,
+                "total_tokens": total_tokens
+            }
+        }
 
     def tokenize(self, text: str) -> int:
         """

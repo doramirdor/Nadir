@@ -31,3 +31,13 @@ class BaseProvider(ABC):
         """
         # Default implementation, can be overridden
         pass
+
+    def generate_response_with_cost(self, prompt: str, **kwargs) -> dict:
+        """
+        Generate a response and calculate the cost based on token usage and pricing.
+        
+        :param prompt: Input prompt or text
+        :param kwargs: Additional generation parameters
+        :return: A dictionary with the response and cost details
+        """
+        pass

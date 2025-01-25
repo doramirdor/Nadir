@@ -6,15 +6,10 @@ def main():
     # Create custom configuration
     custom_config = DynamicLLMSelectorConfig(
         models={
-            "claude-haiku": ModelConfig(
-                name="claude-haiku",
-                provider="anthropic",
-                complexity_threshold=40.0
-            ),
-            "claude-sonnet": ModelConfig(
+            "gpt-3.5": ModelConfig(
                 name="gpt-3.5-turbo",
                 provider="openai",
-                complexity_threshold=75.0
+                complexity_threshold=40.0
             ),
             "gpt-4": ModelConfig(
                 name="gpt-4",

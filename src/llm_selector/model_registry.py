@@ -4,15 +4,16 @@ from src.llm_selector.providers import BaseProvider
 from src.llm_selector.providers.anthropic import AnthropicProvider
 from src.llm_selector.providers.openai import OpenAIProvider
 from src.llm_selector.providers.huggingface import HuggingFaceProvider
+from src.config.settings import ModelConfig
 
-@dataclass
-class ModelConfig:
-    name: str
-    provider: str
-    complexity_threshold: float = 50.0
-    max_tokens: int = 200000
-    cost_per_1k_tokens: float = 0.25
-    model_instance: Any = None
+# @dataclass
+# class ModelConfig:
+#     name: str
+#     provider: str
+#     complexity_threshold: float = 50.0
+#     max_tokens: int = 200000
+#     cost_per_1k_tokens: float = 0.25
+#     model_instance: Any = None
 
 class ModelRegistry:
     def __init__(self):
@@ -65,7 +66,7 @@ class ModelRegistry:
         :return: Sorted list of models
         """
         return sorted(
-            self.models, 
+        self.models, 
             key=lambda x: x.complexity_threshold
         )
 
