@@ -2,8 +2,8 @@ import pytest
 import json
 from unittest.mock import patch, MagicMock
 
-from src.complextiy.base_complexity_analyzer import BaseComplexityAnalyzer
-from src.gemini_complexity_analyzer import GeminiComplexityAnalyzer
+from src.complextiy.analyzer import ComplexityAnalyzer
+from src.complextiy.gemini import GeminiComplexityAnalyzer
 
 
 @pytest.fixture

@@ -1,5 +1,5 @@
 from typing import Dict, Optional, List
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, ConfigDict, validator
 from src.llm_selector.providers import BaseProvider
 from src.llm_selector.providers.anthropic import AnthropicProvider
 import os
@@ -28,6 +28,9 @@ class ModelConfig(BaseModel):
     )
     api_key: Optional[str] = None
     model_instance: Optional[BaseProvider] = None
+    
+    # model_config = ConfigDict(arbitrary_types_allowed=True)
+
 
     @validator("api_key", always=True)
     def set_api_key_from_env(cls, v, values):
