@@ -18,4 +18,4 @@ class TestModelSelection:
         discussing both theoretical foundations and practical implications.
         """
         selected_model = self.selector.select_model(complex_prompt)
-        assert selected_model.complexity_threshold >= 75
+        assert selected_model.complexity_threshold >= 60

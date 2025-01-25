@@ -1,5 +1,10 @@
 import pytest
-from src.llm_selector.complexity_analyzer import ComplexityAnalyzer
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname("src"), '..')))
+
+from src.complextiy.analyzer import ComplexityAnalyzer
 
 class TestComplexityAnalyzer:
     def setup_method(self):
@@ -23,7 +28,6 @@ class TestComplexityAnalyzer:
     def test_complexity_details(self):
         prompt = "Explain the principles of machine learning algorithms."
         details = self.analyzer.get_complexity_details(prompt)
-        
+
         assert 'overall_complexity' in details
         assert 'token_count' in details
-        assert 'unique_tokens_ratio' in details

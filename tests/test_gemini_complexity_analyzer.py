@@ -69,7 +69,7 @@ def test_calculate_complexity_invalid_json(mock_gemini_model):
     prompt = "A complex text that triggers invalid JSON response."
     details = analyzer.get_complexity_details(prompt)
 
-    assert details["overall_complexity"] == 0.0
+    assert details["overall_complexity"] == -1.0
     assert details["explanation"] == "This is not valid JSON"
     mock_gemini_model.generate_content.assert_called_once()
 
