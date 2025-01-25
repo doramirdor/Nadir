@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from src.llm_selector.complexity_analyzer import ComplexityAnalyzer
+from src.complextiy.analyzer import ComplexityAnalyzer
 
 def generate_synthetic_data(num_samples=1000):
     """
@@ -37,12 +37,14 @@ def train_complexity_model():
     # Calculate complexity for each text
     complexities = [analyzer.calculate_complexity(text) for text in texts]
     
+    features = []
     # Feature extraction (basic example)
-    features = [
-        len(text.split()),  # Word count
-        len(set(text.split())),  # Unique word count
-        text.count(' ') / len(text) if len(text) > 0 else 0  # Spacing density
-    ]
+    for text in texts:
+        features.append([
+            len(text.split()),  # Word count
+            len(set(text.split())),  # Unique word count
+            text.count(' ') / len(text) if len(text) > 0 else 0  # Spacing density
+        ])
     
     # Split data
     X_train, X_test, y_train, y_test = train_test_split(
