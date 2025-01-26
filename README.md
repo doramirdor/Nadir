@@ -1,233 +1,90 @@
-# LLMOpt: A Modular Framework for LLM Selection & Prompt Processing
+# Nadir
 
-LLMOpt is a flexible Python framework that allows you to:
+<img src="https://i.imgur.com/ZWnhY9T.png" width=50% height=50%>
 
-- **Measure prompt complexity** via a custom **ComplexityAnalyzer**.
-- **Dynamically select** an appropriate LLM from multiple providers (OpenAI, Hugging Face, etc.) based on that complexity.
-- **Optionally compress** large or complex prompts before sending them to an LLM.
-
-The project is organized into a set of modules that can be composed or extended as needed.
 
 ---
 
-## Table of Contents
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/doramirdor/Nadir/python-package.yml)
 
-- [Features](#features)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Usage Examples](#usage-examples)
-  - [Complexity Analysis](#complexity-analysis)
-  - [Model Selection & Generation](#model-selection--generation)
-  - [Prompt Compression](#prompt-compression)
-- [Available Models](#available-models)
-- [Advanced Configuration](#advanced-configuration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
-## Features
+## Introduction
 
-1. **Complexity Analysis**  
-   - Calculate an overall complexity score (0–100) based on *token complexity*, *linguistic complexity*, and *structural complexity*.  
-   - Easily extendable for custom metrics.
+**Nadir** is a cutting-edge package that dynamically selects and interacts with Large Language Models (LLMs) based on prompt complexity, cost constraints, and performance goals. Whether you're working with OpenAI, Anthropic, Gemini, or Hugging Face models, Nadir ensures you always pick the right tool for the job.
 
-2. **LLM Selection**  
-   - **LLMSelector** automatically decides which model to use based on a prompt’s complexity.  
-   - Register multiple models (GPT-3.5, GPT-4, GPT-2, etc.) with individual **complexity thresholds**.
+From **cost-efficient compression** to **insightful complexity analysis**, Nadir brings intelligence to your LLM workflows, helping you save resources while maximizing output quality.
 
-3. **Providers**  
-   - **OpenAIProvider**: Uses OpenAI’s ChatCompletion API (e.g. GPT-3.5, GPT-4).  
-   - **HuggingFaceProvider**: Uses locally (or remotely) hosted Hugging Face transformers (e.g. GPT-2, T5, etc.).
+---
 
-4. **Prompt Compression** *(Optional)*  
-   - **BaseCompression**: A no-op compressor.  
-   - **PromptCompressor**: A configurable compressor that can truncate text, extract keywords, or invoke an LLM for “high-quality” compression.
+## Why Choose Nadir?
 
-5. **Caching**  
-   - Optional usage of `lru_cache` on compression or complexity analysis for repeated calls on the same data.
+- **Dynamic Model Selection**: Automatically choose the best LLM for any given task based on complexity and cost thresholds.
+- **Cost Optimization**: Minimize token usage and costs with intelligent prompt compression.
+- **Multi-Provider Support**: Seamless integration with OpenAI, Anthropic, Google Gemini, and Hugging Face.
+- **Extensible Design**: Add your own complexity analyzers, compression strategies, or new providers effortlessly.
+- **Rich Insights**: Generate detailed metrics on token usage, costs, and model performance.
 
 ---
 
 ## Installation
 
-1. **Clone the repository**:
-
-   ```bash
-   git clone https://github.com/YourUsername/LLMOpt.git
-   cd LLMOpt
-```
-
-2. **Create a virtual environment (recommended):**
+Install Nadir using pip:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+pip install nadir
 ```
 
-3. **Install dependencies:**
+---
+ 
+## Getting Started
+Here’s a quick example to get you up and running with Nadir:
 
-```bash
-
-pip install -r requirements.txt
-(Typical libraries: openai, tiktoken, transformers, torch, etc.)
-```
-
-4. **Set up environment variables (if using OpenAI):**
-
-```bash
-
-export OPENAI_API_KEY="YOUR_OPENAI_KEY"
-
-or put this key in a `.env` file that your project can load.
-```
-## Project Structure
-
-```bash
-LLMOpt/
-├── src/
-│   ├── llm_selector/
-│   │   ├── core.py             # LLMSelector class
-│   │   ├── complexity_analyzer.py
-│   │   ├── model_registry.py
-│   │   ├── providers/
-│   │   │   ├── __init__.py
-│   │   │   ├── openai.py       # OpenAIProvider
-│   │   │   └── huggingface.py  # HuggingFaceProvider
-│   │   ├── compression/
-│   │   │   ├── base_compression.py
-│   │   │   └── prompt_compressor.py
-│   │   └── ...
-│   └── ...
-├── README.md
-├── requirements.txt
-└── ...
-```
-
-complexity_analyzer.py – Contains ComplexityAnalyzer to compute token, linguistic, and structural complexity.
-core.py – Contains LLMSelector, the main class that picks a model and generates responses.
-model_registry.py – Defines ModelConfig and ModelRegistry, storing model info (name, threshold, provider instance, etc.).
-providers/ – Subpackage containing different LLM providers (OpenAI, Hugging Face, or custom).
-compression/ – Subpackage with BaseCompression (no-op) and more advanced compressors like PromptCompressor.
-
-
-## Usage Examples
-### Complexity Analysis
-
+### Dynamic Model Selection
 ```python
-from src.llm_selector.complexity_analyzer import ComplexityAnalyzer
+from nadir import LLMSelector
+from nadir.config import ModelConfig
 
-analyzer = ComplexityAnalyzer()
-prompt = "Explain the differences between supervised and unsupervised learning."
-details = analyzer.get_complexity_details(prompt)
+# Register custom model configurations
+custom_model_config = ModelConfig(
+            name="gemini-1.5-flash-8b",
+            provider="gemini",
+            complexity_threshold=10.0,
+            cost_per_1k_tokens_input=0.003,
+            cost_per_1k_tokens_output=0.005,
+            model_instance=GeminiProvider("gemini-1.5-flash-8b")
+        )
+# Initialize the model registry
+model_registry = ModelRegistry()
+model_registry.register_models([custom_config])
 
+# Initialize the LLMSelector with the custom model
+selector = LLMSelector(model_registry=model_registry)
+
+# Example prompt
+prompt = "Explain the theory of relativity in simple terms."
+
+# Dynamically select a model and generate a response
+details = llm_selector.get_complexity_details(prompt)
 print("Complexity Details:", details)
-# {
-#   'overall_complexity': 45.6,
-#   'token_complexity': 42.2,
-#   'linguistic_complexity': 48.8,
-#   'structural_complexity': 39.0,
-#   'token_count': 23
-# }
-
-```
-
-### Model Selection & Generation
-```python
-import logging
-from src.llm_selector.core import LLMSelector
-from src.llm_selector.model_registry import ModelRegistry, ModelConfig
-from src.llm_selector.providers.openai import OpenAIProvider
-from src.llm_selector.providers.huggingface import HuggingFaceProvider
-
-# Create a logger (optional)
-logger = logging.getLogger("LLMOpt")
-
-# Set up a model registry
-model_registry = ModelRegistry(models=[
-    ModelConfig(
-        name="gpt-3.5-turbo",
-        complexity_threshold=60.0,
-        model_instance=OpenAIProvider("gpt-3.5-turbo")
-    ),
-    ModelConfig(
-        name="gpt2-medium",
-        complexity_threshold=20.0,
-        model_instance=HuggingFaceProvider("gpt2-medium", max_length=100, temperature=0.8)
-    )
-])
-
-# Create the selector
-llm_selector = LLMSelector(
-    model_registry=model_registry,
-    logger=logger
-)
-
-# Generate a response
-prompt = "Hello, how are you?"
+    
+# Generate response
 response = llm_selector.generate_response(prompt)
-print("Response:", response)
-
+print(response)
 ```
 
-### Prompt Compression
-```python
-from src.llm_selector.core import LLMSelector
-from src.llm_selector.model_registry import ModelRegistry, ModelConfig
-from src.llm_selector.providers.openai import OpenAIProvider
-from src.llm_selector.compression.prompt_compressor import PromptCompressor
+---
 
-# Initialize a PromptCompressor
-compressor = PromptCompressor(
-    openai_model="gpt-3.5-turbo",    # The LLM used for "high_quality" compression
-    hf_keyword_model="dslim/bert-base-NER"
-)
+## Community & Support
 
-model_registry = ModelRegistry(models=[
-    ModelConfig(
-        name="gpt-3.5-turbo",
-        complexity_threshold=80.0,
-        model_instance=OpenAIProvider("gpt-3.5-turbo")
-    )
-])
+Join the conversation and get support in our **[Discord Community](https://discord.gg/nadir)**. You can also find examples, documentation, and updates on our **[Website](https://nadir.ai)**.
 
-llm_selector = LLMSelector(
-    model_registry=model_registry,
-    compression=compressor
-)
-
-long_prompt = """This is a very lengthy piece of text that might exceed token limits..."""
-response = llm_selector.generate_response(long_prompt, max_tokens_for_compression=100)
-print("Compressed + Model Response:", response)
-
-```
-
-## Available Models
-You can register as many models as you like in ModelRegistry(models=[]). Each entry is a ModelConfig with:
-
-name: A unique string identifier.
-complexity_threshold: A numeric value indicating the maximum complexity that model can handle.
-model_instance: An instance of a provider (e.g., OpenAIProvider, HuggingFaceProvider, etc.).
-
-
-## Advanced Configuration
-
-### Environment Variables
-`OPENAI_API_KEY`: Required if using OpenAIProvider.
-GPU usage for Hugging Face models is automatically handled if CUDA is available.
-
-### Extended Complexity Analysis
-Modify the `ComplexityAnalyzer` or create your own subclass to adjust weights, thresholds, or incorporate new metrics.
-
-### Prompt Compression
-The default is `BaseCompression`, which returns the prompt unmodified.
-For more advanced logic, use `PromptCompressor` or your own custom class.
-Pass `max_tokens_for_compressio`n in `generate_response` to control the compression limit.
-
-### Logging
-The `LLMSelector` accepts an optional logger. It defaults to a logger named after __name__.
+---
 
 ## License
-### Private License
-All rights reserved.
-You are not permitted to distribute or modify this code without explicit permission from the owner.
+
+Nadir is released under the **AGPL License**. It is strictly restricted for commercial use unless a specific agreement is obtained. Contributions are welcome! Open a pull request or reach out via the community channels.
+
+---
