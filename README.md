@@ -1,13 +1,14 @@
+<div align="center">
+
 # Nadir
 
-<img src="https://i.imgur.com/ZWnhY9T.png" width=50% height=50%>
-
+<<img src="https://private-user-images.githubusercontent.com/167151565/406702548-e67fd6b8-47f4-4351-ab50-a547bb049bcc.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc4NjA4MDMsIm5iZiI6MTczNzg2MDUwMywicGF0aCI6Ii8xNjcxNTE1NjUvNDA2NzAyNTQ4LWU2N2ZkNmI4LTQ3ZjQtNDM1MS1hYjUwLWE1NDdiYjA0OWJjYy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMTI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDEyNlQwMzAxNDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MzljOWNjN2EwYjk5MzFlYWFmZDBhZWU2ZjU2ODFiZjVlNWVjNWU1ZjhiMTNmZjk4NmY1OGU2NmU5YWMzMDRkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.HUKuYMOfJpiLkG4tGMKK64joLOcjRQ7EZ4cbbQfeAiI" width="25%" height="25%">
+</div>
 
 ---
 
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/doramirdor/Nadir/python-package.yml)
-
+![example workflow](https://github.com/doramirdor/Nadir/actions/workflows/python-package.yml/badge.svg)
 
 ---
 
