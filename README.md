@@ -1,10 +1,19 @@
-# Nadir
+<h1 align="center">
+     Nadir
+  <br>
+</h1>
+
 
 <div align="center">
 
 <img src="https://private-user-images.githubusercontent.com/167151565/406702548-e67fd6b8-47f4-4351-ab50-a547bb049bcc.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc4NjIyMTUsIm5iZiI6MTczNzg2MTkxNSwicGF0aCI6Ii8xNjcxNTE1NjUvNDA2NzAyNTQ4LWU2N2ZkNmI4LTQ3ZjQtNDM1MS1hYjUwLWE1NDdiYjA0OWJjYy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMTI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDEyNlQwMzI1MTVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01YWVkOWRhNjIwNTU5OWViZDRhMjhlOWE1ZWY5MjE3NWI0YWY1MTA0OTZlOTUxMDRiODA2NGVmZDkwNWNjNjMzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.FyvltuKcxn4YvpZh7p28IsB7dqS_S_TECXrrKcy0sug" width="25%" height="25%">
 
 </div>
+
+<p align="center">
+  <b>You Do You, We Optimize the Rest</b> <br />
+  <b>Dynamic Model Selection • Cost-Efficient Compression • Multi-Provider Support</b> <br />
+</p>
 
 ---
 
