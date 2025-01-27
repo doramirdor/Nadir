@@ -1,5 +1,5 @@
 from typing import Dict, Optional, List
-from pydantic import BaseModel, Field, ConfigDict, validator
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from src.llm_selector.providers import BaseProvider
 from src.llm_selector.providers.anthropic import AnthropicProvider
 import os
@@ -32,7 +32,7 @@ class ModelConfig(BaseModel):
     # model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
-    @validator("api_key", always=True)
+    @field_validator("api_key")
     def set_api_key_from_env(cls, v, values):
         """
         Dynamically loads the API key for the model based on its provider.
@@ -41,7 +41,8 @@ class ModelConfig(BaseModel):
         env_var_mapping = {
             "anthropic": "ANTHROPIC_API_KEY",
             "openai": "OPENAI_API_KEY",
-            "huggingface": "HUGGINGFACE_API_KEY"
+            "huggingface": "HUGGINGFACE_API_KEY",
+            "gemini": "GEMINI_API_KEY"
         }
         env_key = env_var_mapping.get(provider)
         return os.getenv(env_key, v) if env_key else v

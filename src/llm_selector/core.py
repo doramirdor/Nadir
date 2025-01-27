@@ -85,19 +85,10 @@ class LLMSelector:
             response = selected_model.model_instance.generate_with_metadata(compressed_prompt, **kwargs)
             self.logger.info(f"Response generated using {selected_model.name}, response: {response}")
 
-            # Extract token usage from the response
-            prompt_tokens = response["usage"]["input_tokens"]
-            completion_tokens = response["usage"]["output_tokens"]
+            usage = response["usage"]
+            self.cost_tracker.add_cost(selected_model.model_instance.model_name, usage["prompt_tokens"], usage["completion_tokens"])
 
-            # Calculate and track the cost using separate input and output costs
-            self.cost_tracker.add_cost(
-                input_tokens=prompt_tokens,
-                output_tokens=completion_tokens,
-                cost_per_1k_tokens_input=selected_model.cost_per_1k_tokens_input,
-                cost_per_1k_tokens_output=selected_model.cost_per_1k_tokens_output
-            )
-
-            return response["response"]
+            return response["content"]
         
         except Exception as e:
             self.logger.error(f"Response generation error: {e}")

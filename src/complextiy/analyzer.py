@@ -3,8 +3,9 @@ import math
 import statistics
 import tiktoken
 from typing import Dict, Any, List
+from src.complextiy import BaseComplexityAnalyzer
 
-class ComplexityAnalyzer:
+class ComplexityAnalyzer(BaseComplexityAnalyzer):
     def __init__(self, tokenizer_name: str = "cl100k_base"):
         """
         Initialize the complexity analyzer with a specified tokenizer.
