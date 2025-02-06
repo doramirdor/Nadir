@@ -6,15 +6,6 @@ from src.llm_selector.providers.openai import OpenAIProvider
 from src.llm_selector.providers.huggingface import HuggingFaceProvider
 from src.config.settings import ModelConfig
 
-# @dataclass
-# class ModelConfig:
-#     name: str
-#     provider: str
-#     complexity_threshold: float = 50.0
-#     max_tokens: int = 200000
-#     cost_per_1k_tokens: float = 0.25
-#     model_instance: Any = None
-
 class ModelRegistry:
     def __init__(self):
         self.models: List[ModelConfig] = []
@@ -32,10 +23,10 @@ class ModelRegistry:
                 model_instance=OpenAIProvider("gpt-3.5-turbo")
             ),
             ModelConfig(
-                name="gpt-4",
+                name="gpt-3o-mini",
                 provider="openai",
                 complexity_threshold=60.0,
-                model_instance=OpenAIProvider("gpt-4")
+                model_instance=OpenAIProvider("gpt-3o-mini")
             )
         ]
         
@@ -69,6 +60,31 @@ class ModelRegistry:
         self.models, 
             key=lambda x: x.complexity_threshold
         )
+    
+    def get_models_name(self) -> List[str]:
+        """
+        Get models name
+        
+        :return: list of models name
+        """
+        return list(set([model.name for model in self.models]))
+
+    def get_models_provider(self) -> List[str]:
+        """
+        Get models provider
+        
+        :return: list of models provider
+        """
+        return list(set([model.provider for model in self.models]))
+
+    def get_models_full_name(self) -> List[str]:
+        """
+        Get models provider/name
+        
+        :return: list of models provider/name
+        """
+        return list(set([f"{model.provider}/{model.name}" for model in self.models]))
+
 
     def get_model_by_name(self, name: str) -> ModelConfig:
         """

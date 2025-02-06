@@ -16,16 +16,7 @@ class ModelConfig(BaseModel):
         le=100,
         description="Complexity threshold for selecting the model."
     )
-    cost_per_1k_tokens_input: float = Field(
-        default=0.25,
-        gt=0,
-        description="Cost per 1000 input tokens in USD."
-    )
-    cost_per_1k_tokens_output: float = Field(
-        default=0.25,
-        gt=0,
-        description="Cost per 1000 output tokens in USD."
-    )
+    max_tokens: Optional[int] = 2000
     api_key: Optional[str] = None
     model_instance: Optional[BaseProvider] = None
     
@@ -53,7 +44,7 @@ class DynamicLLMSelectorConfig(BaseModel):
     """
     models: Dict[str, ModelConfig] = Field(
         default_factory=lambda: {
-            "claude-haiku": ModelConfig(
+        "claude-haiku": ModelConfig(
                 name="claude-haiku",
                 provider="anthropic",
                 complexity_threshold=50.0,

@@ -4,7 +4,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname("src"), '..')))
 
-from src.complextiy.analyzer import ComplexityAnalyzer
+from src.complexity.analyzer import ComplexityAnalyzer
 
 class TestComplexityAnalyzer:
     def setup_method(self):
