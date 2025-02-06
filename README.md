@@ -9,7 +9,7 @@
 
 <p align="center">
   <b>You Do You, We Optimize the Rest</b> <br />
-  <b>AI-Driven LLM Selection & Complexity Analysis • Dynamic Model Selection • Cost-Efficient Compression • Multi-Provider Support</b> <br />
+  <b>AI-Driven LLM Selection • Complexity Analysis  • Cost-Efficient Compression • Multi-Provider Support</b> <br />
 </p>
 
 ---
