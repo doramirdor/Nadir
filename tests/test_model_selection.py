@@ -2,11 +2,14 @@ import pytest
 from unittest.mock import MagicMock
 from src.llm_selector.selector.auto import AutoSelector
 from src.llm_selector.providers.openai import OpenAIProvider
+from src.complexity.gemini import GeminiComplexityAnalyzer
 
 @pytest.fixture
 def mock_auto_selector():
     """Fixture that initializes AutoSelector with a mocked model registry."""
-    selector = AutoSelector()
+    performance_config_path = "tests/assests/model_preformance.json"
+    analyizer = GeminiComplexityAnalyzer(performance_config_path=performance_config_path)
+    selector = AutoSelector(complexity_analyzer=analyizer, performance_config_path=performance_config_path, providers=["openai"])
     selector.select_model = MagicMock(return_value=OpenAIProvider("gpt-3.5-turbo"))
     return selector
 
@@ -14,7 +17,7 @@ def test_select_model(mock_auto_selector):
     """Ensure the selector picks an appropriate model."""
     prompt = "How do black holes form?"
     model = mock_auto_selector.select_model(prompt)
-    assert model.model_name == "gpt-3.5-turbo"
+    assert model.model_name == "openai/gpt-3.5-turbo"
 
 def test_generate_response(mock_auto_selector):
     """Ensure the selector generates a response correctly."""

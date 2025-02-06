@@ -95,15 +95,3 @@ class BaseComplexityAnalyzer(ABC):
         :return: A dictionary containing various complexity metrics.
         """
         pass
-
-    @staticmethod
-    @abstractmethod
-    def _parse_json_response(text: str) -> Dict[str, Any]:
-        """
-        Parses and cleans a JSON response string.
-        Must be implemented in subclasses.
-
-        :param text: Raw JSON response as a string.
-        :return: Parsed dictionary.
-        """
-        pass

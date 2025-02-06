@@ -101,7 +101,7 @@ class AutoSelector:
 
         # Get list of models for complexity analysis
         models_api_name = self.model_registry.get_models_full_name()
-        self.complexity_analyzer = complexity_analyzer or GeminiComplexityAnalyzer(candidate_name=models_api_name)
+        self.complexity_analyzer = complexity_analyzer or GeminiComplexityAnalyzer(candidate_names=models_api_name)
 
         self.logger.info(f"AutoSelector initialized with {len(self.model_registry.get_sorted_models())} models.")
 

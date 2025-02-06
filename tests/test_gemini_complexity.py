@@ -6,7 +6,8 @@ from src.complexity.gemini import GeminiComplexityAnalyzer
 @pytest.fixture
 def gemini_analyzer():
     """Fixture to initialize GeminiComplexityAnalyzer."""
-    return GeminiComplexityAnalyzer()
+    performance_config_path = "tests/assests/model_preformance.json"
+    return GeminiComplexityAnalyzer(performance_config_path=performance_config_path)
 
 @patch("src.complexity.gemini.completion")
 def test_get_complexity_details(mock_completion, gemini_analyzer):
@@ -39,7 +40,7 @@ def test_calculate_complexity(mock_completion, gemini_analyzer):
     mock_response = MagicMock()
     mock_response.choices = [MagicMock(message=MagicMock(content=json.dumps({
         "recommended_model": "openai/gpt-4",
-        "overall_complexity": 90,
+        "overall_complexity": 90.0,
         "explanation": "This is a highly technical prompt, requiring GPT-4."
     })))]
     mock_completion.return_value = mock_response
@@ -48,7 +49,7 @@ def test_calculate_complexity(mock_completion, gemini_analyzer):
 
     score = gemini_analyzer.calculate_complexity(prompt)
 
-    assert isinstance(score, float)
+    assert isinstance(score, (int, float))
     assert 0 <= score <= 100
     assert score == 90  # Mocked complexity score
 

@@ -4,7 +4,8 @@ from src.complexity.analyzer import ComplexityAnalyzer
 @pytest.fixture
 def complexity_analyzer():
     """Fixture to provide a ComplexityAnalyzer instance."""
-    return ComplexityAnalyzer()
+    performance_config_path = "tests/assests/model_preformance.json"
+    return ComplexityAnalyzer(performance_config_path=performance_config_path)
 
 def test_calculate_complexity(complexity_analyzer):
     """Tests whether the complexity analysis returns a valid score."""
