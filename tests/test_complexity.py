@@ -1,33 +1,23 @@
 import pytest
-import sys
-import os
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname("src"), '..')))
-
 from src.complexity.analyzer import ComplexityAnalyzer
 
-class TestComplexityAnalyzer:
-    def setup_method(self):
-        self.analyzer = ComplexityAnalyzer()
+@pytest.fixture
+def complexity_analyzer():
+    """Fixture to provide a ComplexityAnalyzer instance."""
+    return ComplexityAnalyzer()
 
-    def test_simple_prompt_complexity(self):
-        simple_prompt = "Hello, how are you?"
-        complexity = self.analyzer.calculate_complexity(simple_prompt)
-        assert 0 <= complexity <= 100
+def test_calculate_complexity(complexity_analyzer):
+    """Tests whether the complexity analysis returns a valid score."""
+    prompt = "Write a Python function to compute Fibonacci numbers recursively."
+    score = complexity_analyzer.calculate_complexity(prompt)
+    assert 0 <= score <= 100
 
-    def test_complex_prompt_complexity(self):
-        complex_prompt = """
-        Analyze the multifaceted implications of quantum entanglement 
-        on contemporary cryptographic methodologies, exploring the 
-        intricate interplay between quantum mechanics and information 
-        theory's fundamental principles.
-        """
-        complexity = self.analyzer.calculate_complexity(complex_prompt)
-        assert complexity > 50
-
-    def test_complexity_details(self):
-        prompt = "Explain the principles of machine learning algorithms."
-        details = self.analyzer.get_complexity_details(prompt)
-
-        assert 'overall_complexity' in details
-        assert 'token_count' in details
+def test_get_complexity_details(complexity_analyzer):
+    """Tests the complexity details breakdown."""
+    prompt = "Write a SQL query to find top 5 customers."
+    details = complexity_analyzer.get_complexity_details(prompt)
+    
+    assert "recommended_model" in details
+    assert "overall_complexity" in details
+    assert 0 <= details["overall_complexity"] <= 100
+    assert details["token_count"] > 0

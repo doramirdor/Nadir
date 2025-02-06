@@ -1,12 +1,12 @@
 import time
 import statistics
-from src.llm_selector.core import LLMSelector
+from src.llm_selector.selector.auto import AutoSelector
 
 def benchmark_model_selection():
     """
     Benchmark model selection performance
     """
-    llm_selector = LLMSelector()
+    llm_selector = AutoSelector()
     
     # Test prompts with varying complexity
     prompts = [
@@ -33,7 +33,7 @@ def benchmark_response_generation():
     """
     Benchmark response generation performance
     """
-    llm_selector = LLMSelector()
+    llm_selector = AutoSelector()
     
     prompts = [
         "Write a short greeting",
