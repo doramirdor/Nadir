@@ -1,0 +1,37 @@
+import json
+import pytest
+from src.utils import load_performance_config
+
+@pytest.fixture
+def mock_model_performance_json(tmp_path):
+    """Creates a temporary JSON file with mock model performance data."""
+    mock_data = [
+        {
+            "API ID": "mock-model",
+            "route": "mock-provider",
+            "Quality Index": "90",
+            "Chatbot Arena": "85",
+            "MMLU": "92%",
+            "GPQA": "77%",
+            "MATH-500": "95%",
+            "HumanEval": "97%",
+            "BlendedUSD/1M Tokens": "$26.25",
+            "Input PriceUSD/1M Tokens": "$15.00",
+            "Output PriceUSD/1M Tokens": "$60.00",
+            "MedianTokens/s": "34.4",
+            "Median First Chunk (s)": "30.79"
+        }
+    ]
+    path = tmp_path / "test_performance.json"
+    with open(path, "w") as f:
+        json.dump(mock_data, f)
+    return str(path)
+
+def test_load_performance_config(mock_model_performance_json):
+    models = load_performance_config(mock_model_performance_json)
+    assert len(models) == 1
+    assert models[0]["unique_name"] == "mock-provider/mock-model"
+    assert models[0]["Quality Index"] == 90.0
+    assert models[0]["Average Cost per Token (USD)"] == pytest.approx(0.0000375)
+    assert models[0]["MedianTokens/s"] == 34.4
+    assert models[0]["Median First Chunk (s)"] == 30.79
