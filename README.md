@@ -8,7 +8,7 @@
 </div>
 
 <p align="center">
-  <b>You Do You, We Optimize the Rest</b> <br />
+  <b>No Overhead, Just Output</b> <br />
   <b>AI-Driven LLM Selection • Complexity Analysis  • Cost-Efficient Compression • Multi-Provider Support</b> <br />
 </p>
 
@@ -39,6 +39,7 @@
 - **Extensible Design**: Add your own complexity analyzers, compression strategies, or new providers effortlessly.
 - **Rich Insights**: Generate detailed metrics on token usage, costs, and model performance.
 
+<img width="857" alt="Image" src="https://github.com/user-attachments/assets/2c25a21c-eb16-48b8-a205-df82ffc77cdc" />
 ---
 
 ## Installation
