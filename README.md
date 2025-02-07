@@ -14,7 +14,7 @@
 
 ---
 
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![example workflow](https://github.com/doramirdor/Nadir/actions/workflows/python-package.yml/badge.svg)
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
 
@@ -239,12 +239,6 @@ Open a PR on GitHub 🚀
 
 
 Join the conversation and get support in our **[Discord Community](https://discord.gg/nadir)**. You can also find examples, documentation, and updates on our **[Website](https://nadir.ai)**.
-
----
-
-## License
-
-Nadir is released under the **AGPL License**. It is strictly restricted for commercial use unless a specific agreement is obtained. Contributions are welcome! Open a pull request or reach out via the community channels.
 
 ---
 
