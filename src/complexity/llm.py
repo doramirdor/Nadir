@@ -9,7 +9,7 @@ from src.complexity import BaseComplexityAnalyzer
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-class GeminiComplexityAnalyzer(BaseComplexityAnalyzer):
+class LLMComplexityAnalyzer(BaseComplexityAnalyzer):
     """
     A complexity analyzer that uses Gemini to evaluate the complexity of a prompt.
     It selects the best model based on performance, cost, and speed using data from a configuration file.
@@ -65,25 +65,35 @@ class GeminiComplexityAnalyzer(BaseComplexityAnalyzer):
         """
         if not self.candidate_models:
             logging.warning("No candidate models available; returning default complexity analysis.")
-            return {"recommended_model": "Unknown", "overall_complexity": -1, "explanation": "No models available."}
+            return {"recommended_model": "Unknown", "overall_complexity": -1, "explanation": "No models available.", "alternative_model":  "Unknown"}
 
         models_description = self._build_models_description(self.candidate_models)
 
-        system_message = (
-            "You are an AI model selection assistant. Below is a list of candidate models with their performance metrics, "
-            "pricing information, and speed benchmarks (each identified by its unique name in the format <API Provider>/<Model>):\n\n"
-            f"{models_description}\n\n"
-            "Your goal is to recommend the best model by balancing three key factors:\n"
-            "1️⃣ **Performance:** Evaluate the model's Quality Index, MMLU, HumanEval, and other metrics.\n"
-            "2️⃣ **Speed:** Consider token generation speeds and latency.\n"
-            "3️⃣ **Cost:** Weigh the blended price per 1M tokens and overall cost efficiency.\n\n"
+        system_message = f"""
+            You are an AI model selection assistant. Below is a list of candidate models with their performance metrics, pricing information, and speed benchmarks (each identified by its unique name in the format <API Provider>/<Model>):
 
-            "📌 **Task:** Based on the user prompt, analyze the trade-offs between accuracy, cost, and speed, and choose the best model accordingly.\n"
-            "Return your response in JSON format with the following keys:\n"
-            "  - `recommended_model`: string (the best candidate's unique name)\n"
-            "  - `overall_complexity`: number (0-100, reflecting how difficult the prompt is for AI models)\n"
-            "  - `explanation`: string (brief reason for selection, highlighting the performance, cost, and speed considerations)\n"
-        )
+            {models_description}
+
+            Your goal is to recommend the best model by balancing three key factors:
+            1️⃣ **Performance**: Evaluate Quality Index, MMLU, HumanEval, and other relevant benchmarks.
+            2️⃣ **Speed**: Consider tokens-per-second throughput and first-chunk latency.
+            3️⃣ **Cost**: Weigh the blended price per 1M tokens and overall cost efficiency.
+
+            🔑 **Important**:
+            - If multiple models exhibit very similar performance, prefer the one that is cheaper and faster.
+            - Avoid defaulting to the expensive model or automatically selecting the second most expensive option.
+            - The reward is reducing cost and latency without significantly sacrificing performance compared to the top model.
+
+            📌 **Task**:
+            1. Analyze the user’s prompt to estimate how “hard” it is for a model to handle. Assign an integer `overall_complexity` from 0 to 100, where higher numbers reflect more complex, nuanced, or specialized queries.
+            2. From the listed models, select the single best candidate, balancing **Performance, Speed, and Cost** as described, with a slight preference for gemini-1.5-flash-8b when applicable.
+            3. Return your answer in **JSON** format with the following keys:
+                - `recommended_model`: string — the chosen model’s unique name (e.g. "<API Provider>/<Model>")
+                - `overall_complexity`: integer (0-100)
+                - `explanation`: short string summarizing why this model is chosen over others, highlighting performance, cost, and speed considerations.
+                - `alternatives`: suggest alternative models from the list
+
+            """
 
         user_message = f"Prompt:\n{prompt}\n\nWhich model from the above candidates should be used?"
         messages = [
@@ -119,7 +129,8 @@ class GeminiComplexityAnalyzer(BaseComplexityAnalyzer):
             return {
                 "recommended_model": parsed_response.get("recommended_model", "Unknown"),
                 "overall_complexity": parsed_response.get("overall_complexity", -1),
-                "explanation": parsed_response.get("explanation", "No explanation provided.")
+                "explanation": parsed_response.get("explanation", "No explanation provided."),
+                "alternative_model": parsed_response.get("alternatives", "Unknown")
             }
         except json.JSONDecodeError as e:
             logging.error(f"Error parsing JSON: {e}")

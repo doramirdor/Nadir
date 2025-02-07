@@ -65,8 +65,8 @@ def load_performance_config(json_path: str) -> List[Dict[str, Any]]:
     candidates = []
     for item in data:
         # Compute the unique name based on API Provider and Model.
-        api_provider = item.get("route", "")
-        model = item.get("API ID", "").strip()
+        api_provider = (item.get("route") or "").strip()
+        model = (item.get("API ID") or "").strip()
         unique_name = f"{api_provider}/{model}"
 
         # Extract and normalize pricing

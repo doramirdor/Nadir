@@ -1,13 +1,13 @@
 import pytest
 import json
 from unittest.mock import patch, MagicMock
-from src.complexity.gemini import GeminiComplexityAnalyzer
+from src.complexity.llm import LLMComplexityAnalyzer
 
 @pytest.fixture
 def gemini_analyzer():
     """Fixture to initialize GeminiComplexityAnalyzer."""
     performance_config_path = "tests/assests/model_preformance.json"
-    return GeminiComplexityAnalyzer(performance_config_path=performance_config_path)
+    return LLMComplexityAnalyzer(performance_config_path=performance_config_path)
 
 @patch("src.complexity.gemini.completion")
 def test_get_complexity_details(mock_completion, gemini_analyzer):

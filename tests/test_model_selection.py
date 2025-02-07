@@ -2,13 +2,13 @@ import pytest
 from unittest.mock import MagicMock
 from src.llm_selector.selector.auto import AutoSelector
 from src.llm_selector.providers.openai import OpenAIProvider
-from src.complexity.gemini import GeminiComplexityAnalyzer
+from src.complexity.llm import LLMComplexityAnalyzer
 
 @pytest.fixture
 def mock_auto_selector():
     """Fixture that initializes AutoSelector with a mocked model registry."""
     performance_config_path = "tests/assests/model_preformance.json"
-    analyizer = GeminiComplexityAnalyzer(performance_config_path=performance_config_path)
+    analyizer = LLMComplexityAnalyzer(performance_config_path=performance_config_path)
     selector = AutoSelector(complexity_analyzer=analyizer, performance_config_path=performance_config_path, providers=["openai"])
     selector.select_model = MagicMock(return_value=OpenAIProvider("gpt-3.5-turbo"))
     return selector

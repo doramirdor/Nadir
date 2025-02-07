@@ -1,7 +1,7 @@
 from litellm import completion
 
 class LLMEvaluator:
-    def __init__(self, model: str = "gemini-1.5-flash-8b"):
+    def __init__(self, model: str = "gemini/gemini-1.5-flash-8b"):
         """
         Initializes the evaluator with an API key and a model.
         """
@@ -32,6 +32,7 @@ class LLMEvaluator:
             - Relevance Score for Response 1: <value>
             - Relevance Score for Response 2: <value>
             - Differences: <short explanation>
+            - Which is better response: <value>
         """
 
         try:

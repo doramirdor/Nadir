@@ -5,7 +5,7 @@ import logging
 from typing import Dict, Any, List, Optional
 from src.utils import load_performance_config, safe_float
 from src.complexity import BaseComplexityAnalyzer  
-from src.complexity.gemini import GeminiComplexityAnalyzer
+from src.complexity.llm import LLMComplexityAnalyzer
 from src.llm_selector.model_registry import ModelRegistry
 from src.config.settings import DynamicLLMSelectorConfig, ModelConfig
 from src.llm_selector.providers.openai import OpenAIProvider
@@ -29,7 +29,7 @@ def build_dynamic_llm_selector_config(json_path: str, providers: List[str] = Non
         # Extract provider and model information
         provider = item.get("api_provider", "")
         model_name = item.get("model", "")
-        quality_index = safe_float(item.get("Quality Index", ))
+        quality_index = item.get("Quality Index", )
         # Instantiate the appropriate model provider
         if provider == "openai":
             model_instance = OpenAIProvider(model_name)
@@ -74,7 +74,7 @@ class AutoSelector:
         logger: Optional[logging.Logger] = None,
         dynamic_config: Optional[DynamicLLMSelectorConfig] = None,
         performance_config_path: Optional[str] = None,
-        providers: Optional[List[str]] = None
+        providers: Optional[List[str]] = None,
     ):
         """
         Initializes the AutoSelector with model selection capabilities.
@@ -97,11 +97,12 @@ class AutoSelector:
 
         # Initialize the model registry
         self.model_registry = model_registry or ModelRegistry()
-        self.model_registry.register_models(dynamic_config.get_models_for_registry())
+        if model_registry is None:
+            self.model_registry.register_models(dynamic_config.get_models_for_registry())
 
         # Get list of models for complexity analysis
         models_api_name = self.model_registry.get_models_full_name()
-        self.complexity_analyzer = complexity_analyzer or GeminiComplexityAnalyzer(candidate_names=models_api_name)
+        self.complexity_analyzer = complexity_analyzer or LLMComplexityAnalyzer(candidate_names=models_api_name)
 
         self.logger.info(f"AutoSelector initialized with {len(self.model_registry.get_sorted_models())} models.")
 
