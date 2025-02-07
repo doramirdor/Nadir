@@ -1,56 +1,49 @@
 import os
 import hashlib
+import openai
 from functools import lru_cache
 from typing import Optional
 
-import google.generativeai as genai
 from transformers import pipeline
 
-from src.compression import BaseCompression
+from src.nadir.compression import BaseCompression
 
-
-class GeminiCompressor(BaseCompression):
+class OpenaiCompressor(BaseCompression):
     """
     A flexible compressor that offers multiple methods to reduce prompt length:
     - Truncation
     - Keyword extraction via a local Hugging Face pipeline
-    - High-quality compression via Gemini (Google Generative AI)
+    - High-quality compression via an OpenAI LLM
     - Automatic fallback logic
     """
 
     def __init__(
-        self,
-        gemini_model: Optional[str] = "gemini-1.5-flash", 
+        self, 
+        openai_model: Optional[str] = "gpt-3.5-turbo", 
         hf_keyword_model: str = "dslim/bert-base-NER",
-        cache_size: int = 1000,
-        google_api_key: Optional[str] = None
+        cache_size: int = 1000
     ):
         """
-        :param gemini_model: Name of the Gemini model for high-quality compression (set to None to skip LLM usage).
+        :param openai_model: Name of the OpenAI model for high-quality compression (set to None to skip LLM usage).
         :param hf_keyword_model: Hugging Face model identifier for keyword extraction pipeline.
         :param cache_size: Max entries to store in the LRU cache for repeated prompt compression calls.
-        :param google_api_key: Your Google Generative AI API key (falls back to env var if None).
         """
-        self.gemini_model = gemini_model
+        self.openai_model = openai_model
         self.hf_keyword_model = hf_keyword_model
         self.cache_size = cache_size
 
-        # Configure Google Generative AI (Gemini)
-        self.google_api_key = google_api_key or os.getenv("GOOGLE_API_KEY")
-        if self.gemini_model and not self.google_api_key:
-            raise ValueError("A Google Generative AI API key is required for Gemini compression.")
-        if self.google_api_key:
-            genai.configure(api_key=self.google_api_key)
-            self.gemini_model_instance = genai.GenerativeModel(self.gemini_model)
+        # Initialize OpenAI
+        # Make sure OPENAI_API_KEY is set in your environment or replace with another method to set the key.
+        openai.api_key = os.getenv("OPENAI_API_KEY")
 
         # Local keyword extraction pipeline
-        self.keyword_extractor = pipeline("token-classification", model=self.hf_keyword_model)
+        self.keyword_extractor = pipeline("token-classification", model=hf_keyword_model)
 
     @lru_cache(maxsize=None)
     def compress(
-        self,
-        prompt: str,
-        method: str = "auto",
+        self, 
+        prompt: str, 
+        method: str = "auto", 
         max_tokens: int = 200
     ) -> str:
         """
@@ -58,7 +51,7 @@ class GeminiCompressor(BaseCompression):
           - 'auto': Chooses automatically (truncate -> keywords -> LLM).
           - 'truncate': Simple half-and-half truncation.
           - 'keywords': Keyword extraction.
-          - 'high_quality': Gemini-based compression.
+          - 'high_quality': LLM-based compression.
         
         :param prompt: The text to compress
         :param method: Which method to use (default = 'auto')
@@ -85,13 +78,13 @@ class GeminiCompressor(BaseCompression):
         Automatically choose compression strategy:
         1) Truncate
         2) If still too long, extract keywords
-        3) If STILL too long and we have a Gemini model configured, do LLM compression
+        3) If STILL too long and we have an OpenAI model configured, do LLM compression
         """
         # Step 1: Truncate
         compressed = self._truncate_prompt(prompt, max_tokens)
         if len(compressed.split()) > max_tokens:
             compressed = self._extract_prompt_keywords(compressed)
-        if len(compressed.split()) > max_tokens and self.gemini_model:
+        if len(compressed.split()) > max_tokens and self.openai_model:
             compressed = self._compress_prompt_with_llm(compressed, max_tokens)
         return compressed
 
@@ -120,31 +113,30 @@ class GeminiCompressor(BaseCompression):
 
     def _compress_prompt_with_llm(self, prompt: str, max_tokens: int) -> str:
         """
-        High-quality compression using Gemini (Google Generative AI).
+        High-quality compression using an OpenAI LLM. 
         Preserves key information, limiting final text to ~max_tokens words.
         """
-        if not self.gemini_model:
-            raise ValueError("No Gemini model specified for LLM-based compression.")
+        if not self.openai_model:
+            raise ValueError("No OpenAI model specified for LLM-based compression.")
 
         try:
-            # Build a short system-like instruction
-            system_instructions = (
-                f"Compress the following text to fewer than {max_tokens} words, "
-                "retaining only critical info:\n\n"
+            response = openai.ChatCompletion.create(
+                model=self.openai_model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": f"Compress the following text to fewer than {max_tokens} words, retaining only critical info."
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                max_tokens=max_tokens,  # The model's own tokens, not strictly the word count
+                temperature=0.3
             )
-            full_prompt = system_instructions + prompt
-
-            # Call Gemini
-            response = self.gemini_model_instance.generate_content(
-                full_prompt,
-                generation_config={
-                    "temperature": 0.3,
-                    "max_output_tokens": 1024,
-                }
-            )
-            return response.text.strip()
-
+            return response.choices[0].message.content.strip()
         except Exception as e:
-            print(f"Gemini compression failed: {e}")
+            print(f"LLM compression failed: {e}")
             # Fallback to truncation if LLM fails
             return self._truncate_prompt(prompt, max_tokens)

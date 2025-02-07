@@ -1,5 +1,5 @@
 import logging
-from src.llm_selector.selector.auto import AutoSelector
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 class BalancedSelector(AutoSelector):
     """

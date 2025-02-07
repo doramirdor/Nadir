@@ -70,7 +70,7 @@ HUGGINGFACE_API_KEY=your_huggingface_api_key
 ### 🔹 Select the Best LLM for a Prompt
 
 ```python
-from src.llm_selector.selector.auto import AutoSelector
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 nadir = AutoSelector()
 prompt = "Explain quantum entanglement in simple terms."
@@ -98,8 +98,8 @@ print(models)
 ### 🔹 Analyzing Code Complexity and Selecting the Best LLM
 
 ```python
-from src.complexity.gemini import GeminiComplexityAnalyzer
-from src.llm_selector.selector.auto import AutoSelector
+from src.nadir.complexity.gemini import GeminiComplexityAnalyzer
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 # Initialize the Gemini-based complexity analyzer
 complexity_analyzer = GeminiComplexityAnalyzer()
@@ -128,8 +128,8 @@ print("Selected Model:", selected_model.name)
 ### 🔹 Compressing Long Prompts Before Model Selection
 
 ```python
-from src.compression import GeminiCompressor
-from src.llm_selector.selector.auto import AutoSelector
+from src.nadir.compression import GeminiCompressor
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 # Initialize Gemini-based prompt compression
 compressor = GeminiCompressor()
@@ -156,9 +156,9 @@ print("Selected Model:", selected_model.name)
 ### 🔹 Combining Compression & Complexity Analysis
 
 ```python
-from src.compression import GeminiCompressor
-from src.complexity.gemini import GeminiComplexityAnalyzer
-from src.llm_selector.selector.auto import AutoSelector
+from src.nadir.compression import GeminiCompressor
+from src.nadir.complexity.gemini import GeminiComplexityAnalyzer
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 # Initialize complexity analyzer and compressor
 complexity_analyzer = GeminiComplexityAnalyzer()

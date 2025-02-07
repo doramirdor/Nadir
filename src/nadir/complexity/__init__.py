@@ -5,7 +5,7 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional, List
 
-from src.utils import load_performance_config
+from src.nadir.utils import load_performance_config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

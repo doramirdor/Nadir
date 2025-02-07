@@ -1,7 +1,7 @@
 import pytest
 import json
 from unittest.mock import patch, MagicMock
-from src.complexity.llm import LLMComplexityAnalyzer
+from src.nadir.complexity.llm import LLMComplexityAnalyzer
 
 @pytest.fixture
 def gemini_analyzer():

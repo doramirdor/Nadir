@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from src.complexity.analyzer import ComplexityAnalyzer
+from src.nadir.complexity.analyzer import ComplexityAnalyzer
 
 def generate_synthetic_data(num_samples=1000):
     """
