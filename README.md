@@ -17,6 +17,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![example workflow](https://github.com/doramirdor/Nadir/actions/workflows/python-package.yml/badge.svg)
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
+[![Upload Python Package](https://github.com/doramirdor/Nadir/actions/workflows/python-publish.yml/badge.svg)](https://github.com/doramirdor/Nadir/actions/workflows/python-publish.yml)
 
 ---
 
@@ -47,7 +48,7 @@
 Install Nadir using pip:
 
 ```bash
-pip install nadir
+pip install nadir-llm
 ```
 
 ---
