@@ -32,6 +32,26 @@
 
 ---
 
+## Why LLM Selection Matters
+
+- **Tailored Performance:** The right LLM understands the nuances in your detailed prompts, delivering responses that are both precise and insightful.
+- **Empowered Creativity:** When your prompts are crafted with depth, the LLM becomes an extension of your vision, helping you explore ideas and solve problems innovatively.
+- **Maximized Impact:** Strategic LLM selection ensures that every dollar spent translates into greater creative output and operational efficiency.
+
+## Prompt Complexity: The Key to Unlocking Brilliance
+
+- **Guiding Detail:** Complex prompts provide rich context and clear instructions, steering the LLM towards high-quality, context-aware responses.
+- **Enhanced Innovation:** Detailed prompts allow the LLM to process multi-step reasoning and intricate logic, unlocking layers of creativity that simple prompts might miss.
+- **Precision and Insight:** When you invest in crafting thoughtful, detailed prompts, you set the stage for the LLM to deliver outputs that elevate your work to the next level.
+
+## Balancing Complexity and Cost
+
+- **Invest Wisely:** Advanced LLMs excel with complex prompts but come at a higher cost. The key is to find the right balance that meets your needs without overspending.
+- **Optimize Your Approach:** Start with simple prompts to gauge performance, then gradually introduce more complexity as needed. This iterative approach ensures you get the best value for your investment.
+- **Maximize ROI:** By aligning the depth of your prompts with the appropriate LLM, you achieve optimal efficiency—harnessing the full power of AI while managing expenses effectively.
+
+---
+
 ## Why Choose Nadir?
 
 - **Dynamic Model Selection**: Automatically choose the best LLM for any given task based on complexity and cost thresholds.
