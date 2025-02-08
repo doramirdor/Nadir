@@ -9,6 +9,7 @@ description = "Dynamic LLM Model Selector based on Prompt Complexity"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
+dynamic = ["classifiers"]
 
 authors = [
   { name = "Dor Amir", email = "amirdor@gmail.com" }
@@ -19,16 +20,16 @@ dependencies = [
   "anthropic>=0.20.0",
   "openai>=1.0.0",
   "transformers>=4.35.0",
-  "pydantic>=2.0.0",
+  "pydantic>=2.0.0"
 ]
 
 [project.optional-dependencies]
 dev = [
   "pytest>=7.0.0",
   "mypy>=1.0.0",
-  "black>=23.0.0",
+  "black>=23.0.0"
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-namespaces = false  
+namespaces = false
