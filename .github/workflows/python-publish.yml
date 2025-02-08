@@ -40,7 +40,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/project/nadir-llm/
+      url: https://pypi.org/project/Nadir-llm/
 
     steps:
       - name: Retrieve release distributions
