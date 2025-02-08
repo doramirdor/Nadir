@@ -4,12 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nadir-llm"
-version = "0.1.0"
 description = "Dynamic LLM Model Selector based on Prompt Complexity"
+keywords = ["LLM", "model selection", "prompt", "complexity"]
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
-dynamic = ["classifiers"]
+dynamic = ["version"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
 
 authors = [
   { name = "Dor Amir", email = "amirdor@gmail.com" }
