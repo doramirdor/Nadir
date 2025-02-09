@@ -114,16 +114,16 @@ models = nadir.list_available_models()
 print(models)
 ```
 
-## ⚙️ Advanced Usage: Using GeminiComplexityAnalyzer and Compression
+## ⚙️ Advanced Usage: Using LLMComplexityAnalyzer and Compression
 
 ### 🔹 Analyzing Code Complexity and Selecting the Best LLM
 
 ```python
-from src.nadir.complexity.gemini import GeminiComplexityAnalyzer
+from src.nadir.complexity.llm import LLMComplexityAnalyzer
 from src.nadir.llm_selector.selector.auto import AutoSelector
 
-# Initialize the Gemini-based complexity analyzer
-complexity_analyzer = GeminiComplexityAnalyzer()
+# Initialize the LLM-based complexity analyzer
+complexity_analyzer = LLMComplexityAnalyzer()
 
 # Sample Python code
 code_snippet = """
@@ -178,11 +178,11 @@ print("Selected Model:", selected_model.name)
 
 ```python
 from src.nadir.compression import GeminiCompressor
-from src.nadir.complexity.gemini import GeminiComplexityAnalyzer
+from src.nadir.complexity.llm import LLMComplexityAnalyzer
 from src.nadir.llm_selector.selector.auto import AutoSelector
 
 # Initialize complexity analyzer and compressor
-complexity_analyzer = GeminiComplexityAnalyzer()
+complexity_analyzer = LLMComplexityAnalyzer()
 compressor = GeminiCompressor()
 
 # A long, complex prompt
@@ -214,7 +214,7 @@ print("Selected Model:", selected_model.name)
 
 ### 1️⃣ Complexity Analysis
 
-Uses `GeminiComplexityAnalyzer` to evaluate **token usage**, **linguistic difficulty**, and **structural complexity**.
+Uses `LLMComplexityAnalyzer` to evaluate **token usage**, **linguistic difficulty**, and **structural complexity**.
 Assigns a **complexity score** (0-100).
 
 ### 2️⃣ Intelligent Model Selection
