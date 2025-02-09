@@ -259,7 +259,7 @@ git push origin feature-improvement
 Open a PR on GitHub 🚀
 
 
-Join the conversation and get support in our **[Discord Community](https://discord.gg/nadir)**.
+Join the conversation and get support in our **[Discord Community](https://discord.gg/qK82a7Kh)**.
 
 ---
 
