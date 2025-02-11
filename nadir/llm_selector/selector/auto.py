@@ -3,16 +3,16 @@ import json
 import os
 import logging
 from typing import Dict, Any, List, Optional
-from src.nadir.utils import load_performance_config, safe_float
-from src.nadir.complexity import BaseComplexityAnalyzer  
-from src.nadir.complexity.llm import LLMComplexityAnalyzer
-from src.nadir.llm_selector.model_registry import ModelRegistry
-from src.nadir.config.settings import DynamicLLMSelectorConfig, ModelConfig
-from src.nadir.llm_selector.providers.openai import OpenAIProvider
-from src.nadir.llm_selector.providers.gemini import GeminiProvider
-from src.nadir.llm_selector.providers.anthropic import AnthropicProvider
-from src.nadir.compression import BaseCompression
-from src.nadir.cost.tracker import CostTracker
+from nadir.utils import load_performance_config, safe_float
+from nadir.complexity import BaseComplexityAnalyzer  
+from nadir.complexity.llm import LLMComplexityAnalyzer
+from nadir.llm_selector.model_registry import ModelRegistry
+from nadir.config.settings import DynamicLLMSelectorConfig, ModelConfig
+from nadir.llm_selector.providers.openai import OpenAIProvider
+from nadir.llm_selector.providers.gemini import GeminiProvider
+from nadir.llm_selector.providers.anthropic import AnthropicProvider
+from nadir.compression import BaseCompression
+from nadir.cost.tracker import CostTracker
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

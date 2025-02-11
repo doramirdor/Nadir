@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
-from src.nadir.llm_selector.selector.auto import AutoSelector
-from src.nadir.llm_selector.providers.openai import OpenAIProvider
-from src.nadir.complexity.llm import LLMComplexityAnalyzer
+from nadir.llm_selector.selector.auto import AutoSelector
+from nadir.llm_selector.providers.openai import OpenAIProvider
+from nadir.complexity.llm import LLMComplexityAnalyzer
 
 @pytest.fixture
 def mock_auto_selector():

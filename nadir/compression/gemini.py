@@ -6,7 +6,7 @@ from typing import Optional
 import google.generativeai as genai
 from transformers import pipeline
 
-from src.nadir.compression import BaseCompression
+from nadir.compression import BaseCompression
 
 
 class GeminiCompressor(BaseCompression):

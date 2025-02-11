@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from src.nadir.llm_selector.providers.openai import OpenAIProvider
+from nadir.llm_selector.providers.openai import OpenAIProvider
 
 @pytest.fixture
 def mock_openai_provider():

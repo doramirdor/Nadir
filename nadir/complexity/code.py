@@ -5,7 +5,7 @@ import math
 import logging
 from typing import Dict, Any, List, Tuple, Optional
 from collections import defaultdict
-from src.nadir.complexity import BaseComplexityAnalyzer
+from nadir.complexity import BaseComplexityAnalyzer
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

@@ -3,7 +3,7 @@ import json
 import logging
 from typing import Dict, Any, Optional, List
 from litellm import completion
-from src.nadir.complexity import BaseComplexityAnalyzer
+from nadir.complexity import BaseComplexityAnalyzer
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
