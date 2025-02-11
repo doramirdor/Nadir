@@ -1,5 +1,5 @@
 import pytest
-from src.nadir.cost.tracker import CostTracker
+from nadir.cost.tracker import CostTracker
 
 def test_cost_tracker():
     tracker = CostTracker()
