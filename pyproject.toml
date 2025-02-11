@@ -33,5 +33,5 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["nadir"]
+where = ["src"]
 namespaces = false

@@ -8,8 +8,8 @@ setup(
     author_email="amirdor@gmail.com",
     url="https://github.com/doramirdor/nadir",
     license="MIT",
-    packages=find_packages(where="nadir"),  
-    package_dir={"": "nadir"}, 
+    packages=find_packages(where="src"),  
+    package_dir={"": "src"}, 
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

@@ -1,5 +1,5 @@
 import pytest
-from nadir.complexity.analyzer import ComplexityAnalyzer
+from src.nadir.complexity.analyzer import ComplexityAnalyzer
 
 @pytest.fixture
 def complexity_analyzer():

@@ -1,5 +1,5 @@
 import logging
-from nadir.llm_selector.selector.auto import AutoSelector
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 class BudgetFriendlySelector(AutoSelector):
     """

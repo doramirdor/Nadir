@@ -1,4 +1,4 @@
-from nadir.llm_selector.providers import BaseProvider
+from src.nadir.llm_selector.providers import BaseProvider
 from typing import Dict, Any
 
 class DeepSeekProvider(BaseProvider):

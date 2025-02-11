@@ -6,7 +6,7 @@ from typing import Optional
 
 from transformers import pipeline
 
-from nadir.compression import BaseCompression
+from src.nadir.compression import BaseCompression
 
 class OpenaiCompressor(BaseCompression):
     """

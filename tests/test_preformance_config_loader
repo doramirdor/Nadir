@@ -1,6 +1,6 @@
 import json
 import pytest
-from nadir.utils import load_performance_config
+from src.nadir.utils import load_performance_config
 
 @pytest.fixture
 def mock_model_performance_json(tmp_path):

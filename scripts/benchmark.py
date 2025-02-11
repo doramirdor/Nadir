@@ -1,6 +1,6 @@
 import time
 import statistics
-from nadir.llm_selector.selector.auto import AutoSelector
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 def benchmark_model_selection():
     """

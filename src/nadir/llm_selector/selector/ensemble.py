@@ -1,6 +1,6 @@
 import logging
 from collections import Counter
-from nadir.llm_selector.selector.auto import AutoSelector
+from src.nadir.llm_selector.selector.auto import AutoSelector
 
 class EnsembleSelector(AutoSelector):
     """

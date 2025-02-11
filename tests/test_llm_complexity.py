@@ -2,7 +2,7 @@ import os
 import pytest
 import json
 from unittest.mock import patch, MagicMock
-from nadir.complexity.llm import LLMComplexityAnalyzer
+from src.nadir.complexity.llm import LLMComplexityAnalyzer
 
 @pytest.fixture
 def llm_analyzer():
@@ -10,7 +10,7 @@ def llm_analyzer():
     return LLMComplexityAnalyzer(performance_config_path=os.path.join(os.path.dirname(__file__),"assets/model_performance.json"))
 
 
-@patch("nadir.complexity.llm.completion")
+@patch("src.nadir.complexity.llm.completion")
 def test_get_complexity_details(mock_completion, llm_analyzer):
     """Test if LLMComplexityAnalyzer returns valid complexity details."""
 
@@ -35,7 +35,7 @@ def test_get_complexity_details(mock_completion, llm_analyzer):
     assert 0 <= details["overall_complexity"] <= 100
     assert details["recommended_model"] == "openai/gpt-3.5-turbo"
 
-@patch("nadir.complexity.llm.completion")
+@patch("src.nadir.complexity.llm.completion")
 def test_calculate_complexity(mock_completion, llm_analyzer):
     """Test if LLMComplexityAnalyzer calculates a valid complexity score."""
 

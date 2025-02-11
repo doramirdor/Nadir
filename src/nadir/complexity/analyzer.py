@@ -5,8 +5,8 @@ import statistics
 import logging
 import tiktoken
 from typing import Dict, Any, List, Optional
-from nadir.complexity import BaseComplexityAnalyzer
-from nadir.utils import load_performance_config
+from src.nadir.complexity import BaseComplexityAnalyzer
+from src.nadir.utils import load_performance_config
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
