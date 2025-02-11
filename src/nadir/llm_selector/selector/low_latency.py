@@ -1,5 +1,5 @@
 import logging
-from src.nadir.llm_selector.selector.auto import AutoSelector
+from nadir.llm_selector.selector.auto import AutoSelector
 
 class LowLatencySelector(AutoSelector):
     """

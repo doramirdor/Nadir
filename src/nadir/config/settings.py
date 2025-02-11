@@ -1,7 +1,7 @@
 from typing import Dict, Optional, List
 from pydantic import BaseModel, Field, ConfigDict, field_validator
-from src.nadir.llm_selector.providers import BaseProvider
-from src.nadir.llm_selector.providers.anthropic import AnthropicProvider
+from nadir.llm_selector.providers import BaseProvider
+from nadir.llm_selector.providers.anthropic import AnthropicProvider
 import os
 
 class ModelConfig(BaseModel):

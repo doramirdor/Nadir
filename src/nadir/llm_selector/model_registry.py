@@ -1,10 +1,10 @@
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
-from src.nadir.llm_selector.providers import BaseProvider
-from src.nadir.llm_selector.providers.anthropic import AnthropicProvider
-from src.nadir.llm_selector.providers.openai import OpenAIProvider
-from src.nadir.llm_selector.providers.huggingface import HuggingFaceProvider
-from src.nadir.config.settings import ModelConfig
+from nadir.llm_selector.providers import BaseProvider
+from nadir.llm_selector.providers.anthropic import AnthropicProvider
+from nadir.llm_selector.providers.openai import OpenAIProvider
+from nadir.llm_selector.providers.huggingface import HuggingFaceProvider
+from nadir.config.settings import ModelConfig
 
 class ModelRegistry:
     def __init__(self):
